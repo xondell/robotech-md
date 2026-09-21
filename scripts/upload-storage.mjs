@@ -3,13 +3,13 @@ import { extname, join, relative, sep } from "node:path";
 import { createClient } from "@supabase/supabase-js";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const secretKey = process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-if (!url || !serviceRoleKey) {
-  throw new Error("Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local before uploading.");
+if (!url || !secretKey) {
+  throw new Error("Set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SECRET_KEY in .env.local before uploading.");
 }
 
-const supabase = createClient(url, serviceRoleKey, { auth: { persistSession: false, autoRefreshToken: false } });
+const supabase = createClient(url, secretKey, { auth: { persistSession: false, autoRefreshToken: false } });
 const bucket = "site-media";
 const publicRoot = join(process.cwd(), "public");
 const roots = ["images", "media", "models", "documents"];

@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run typecheck && npm run build",
-    "storage:upload": "node scripts/upload-storage.mjs"
+    "storage:upload": "node --env-file=.env.local scripts/upload-storage.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.116.0",
