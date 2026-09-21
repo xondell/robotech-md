@@ -1,0 +1,47 @@
+# This directory started as a complete cPanel account backup. Ignore everything
+# by default and explicitly allow only the new application and migration files.
+/*
+
+!.gitignore
+!.env.example
+!README.md
+!package.json
+!package-lock.json
+!tsconfig.json
+!next.config.ts
+!next-env.d.ts
+!eslint.config.mjs
+!postcss.config.mjs
+
+!src/
+!src/**
+!public/
+!public/**
+!scripts/
+!scripts/**
+!supabase/
+!supabase/**
+!docs/
+!docs/**
+
+# Local and generated application state
+.env
+.env.*
+!.env.example
+.next/
+out/
+node_modules/
+coverage/
+*.tsbuildinfo
+.vercel/
+.supabase/
+supabase/.branches/
+supabase/.temp/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
