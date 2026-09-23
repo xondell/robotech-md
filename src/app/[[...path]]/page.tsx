@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
-import { AchievementsPage, ContactPage, FllPage, FtcPage, GalleryPage, HomePage, PartnersPage, ProjectsPage, TeamPage } from "@/components/pages";
+import { FllArchivePage, FllCurrentPage, FllSeasonSelectPage } from "@/components/fll-pages";
+import { AchievementsPage, ContactPage, FtcPage, GalleryPage, HomePage, PartnersPage, ProjectsPage, TeamPage } from "@/components/pages";
 import { localPath, routes, type RouteSlug } from "@/data/content";
 import type { Locale } from "@/data/types";
 import { getPublicContent } from "@/lib/content";
@@ -12,8 +13,7 @@ type PageProps = { params: Promise<{ path?: string[] }> };
 function resolvePath(path: string[] = []): { locale: Locale; slug: RouteSlug } | null {
   const locale: Locale = path[0] === "en" ? "en" : "ro";
   const parts = locale === "en" ? path.slice(1) : path;
-  if (parts.length > 1) return null;
-  const slug = (parts[0] ?? "") as RouteSlug;
+  const slug = parts.join("/") as RouteSlug;
   if (!routes.includes(slug)) return null;
   return { locale, slug };
 }
@@ -22,7 +22,9 @@ const titles: Record<RouteSlug, Record<Locale, string>> = {
   "": { ro: "ROBOTECH Moldova | Echipa FTC #25491", en: "ROBOTECH Moldova | FTC Team #25491" },
   team: { ro: "Echipa", en: "Team" },
   ftc: { ro: "FIRST Tech Challenge #25491", en: "FIRST Tech Challenge #25491" },
-  fll: { ro: "FIRST LEGO League & MuoVis", en: "FIRST LEGO League & MuoVis" },
+  fll: { ro: "Sezoanele FIRST LEGO League", en: "FIRST LEGO League Seasons" },
+  "fll/2025-2026": { ro: "FLL 2025–2026 | UNEARTHED și MuoVis", en: "FLL 2025–2026 | UNEARTHED & MuoVis" },
+  "fll/2026-2027": { ro: "FLL 2026–2027 | BIOGLOW", en: "FLL 2026–2027 | BIOGLOW" },
   projects: { ro: "Proiecte inginerești", en: "Engineering Projects" },
   achievements: { ro: "Rezultate și premii", en: "Achievements & Awards" },
   partners: { ro: "Parteneriate", en: "Partnerships" },
@@ -34,7 +36,9 @@ const descriptions: Record<RouteSlug, Record<Locale, string>> = {
   "": { ro: "Echipă de robotică din Moldova, activă în FTC #25491 și FIRST LEGO League din 2018.", en: "Moldovan robotics team competing in FTC #25491 and FIRST LEGO League since 2018." },
   team: { ro: "Membrii activi, mentorii și alumni ROBOTECH.", en: "Active ROBOTECH members, mentors, and alumni." },
   ftc: { ro: "ROBOTECH #25491 — robot, software, autonomie și rezultate FTC.", en: "ROBOTECH #25491 — FTC robot, software, autonomous systems, and results." },
-  fll: { ro: "Direcția FLL ROBOTECH, robotul și proiectul de inovație MuoVis.", en: "ROBOTECH FLL, the competition robot, and the MuoVis Innovation Project." },
+  fll: { ro: "Alege un sezon FIRST LEGO League ROBOTECH și explorează robotul, proiectul și rezultatele.", en: "Choose a ROBOTECH FIRST LEGO League season and explore its robot, project, and results." },
+  "fll/2025-2026": { ro: "Arhiva completă UNEARTHED 2025–2026: robotul FLL, proiectul MuoVis, documentația, experții și rezultatele.", en: "Complete UNEARTHED 2025–2026 archive: FLL robot, MuoVis, documentation, experts, and results." },
+  "fll/2026-2027": { ro: "Sezonul curent FLL BIOGLOW 2026–2027 al echipei ROBOTECH.", en: "ROBOTECH’s current FLL BIOGLOW 2026–2027 season." },
   projects: { ro: "Proiectele inginerești dezvoltate de ROBOTECH.", en: "Engineering projects developed by ROBOTECH." },
   achievements: { ro: "Cronologia verificată a rezultatelor ROBOTECH.", en: "The verified chronology of ROBOTECH achievements." },
   partners: { ro: "Susține robotica competitivă și educația inginerească în Moldova.", en: "Support competitive robotics and engineering education in Moldova." },
@@ -59,9 +63,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export function generateStaticParams() {
   return [
     { path: [] },
-    ...routes.filter(Boolean).map((slug) => ({ path: [slug] })),
+    ...routes.filter(Boolean).map((slug) => ({ path: slug.split("/") })),
     { path: ["en"] },
-    ...routes.filter(Boolean).map((slug) => ({ path: ["en", slug] })),
+    ...routes.filter(Boolean).map((slug) => ({ path: ["en", ...slug.split("/")] })),
   ];
 }
 
@@ -75,7 +79,9 @@ export default async function Page({ params }: PageProps) {
     "": <HomePage locale={locale} members={content.team} achievementData={content.awards} />,
     team: <TeamPage locale={locale} members={content.team} />,
     ftc: <FtcPage locale={locale} achievementData={content.awards} />,
-    fll: <FllPage locale={locale} achievementData={content.awards} />,
+    fll: <FllSeasonSelectPage locale={locale} />,
+    "fll/2025-2026": <FllArchivePage locale={locale} achievementData={content.awards} />,
+    "fll/2026-2027": <FllCurrentPage locale={locale} />,
     projects: <ProjectsPage locale={locale} />,
     achievements: <AchievementsPage locale={locale} achievementData={content.awards} />,
     partners: <PartnersPage locale={locale} />,

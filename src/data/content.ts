@@ -5,6 +5,8 @@ export const routes = [
   "team",
   "ftc",
   "fll",
+  "fll/2025-2026",
+  "fll/2026-2027",
   "projects",
   "achievements",
   "partners",

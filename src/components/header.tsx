@@ -43,7 +43,7 @@ export function Header({ locale, slug }: { locale: Locale; slug: RouteSlug }) {
           {navItems.map((item) => (
             <Link
               key={item.key}
-              className={slug === item.slug ? "is-active" : ""}
+              className={slug === item.slug || (item.slug !== "" && slug.startsWith(`${item.slug}/`)) ? "is-active" : ""}
               href={localPath(locale, item.slug)}
               onClick={() => setOpen(false)}
             >
