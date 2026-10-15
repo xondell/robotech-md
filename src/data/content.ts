@@ -1,4 +1,10 @@
-import type { GalleryItem, Locale, Partner } from "./types";
+import type { GalleryItem, Locale, Partner, LocalizedText } from "./types";
+import { translateText } from "./ru";
+
+export function localize(value: LocalizedText, locale: Locale): string {
+  if (locale === "ru") return value.ru ?? translateText(value.en);
+  return value[locale];
+}
 
 export const routes = [
   "",
@@ -155,18 +161,29 @@ export const nav = {
     partners: "Partners",
     contact: "Contact",
   },
+  ru: {
+    home: "Главная",
+    team: "Команда",
+    ftc: "FTC",
+    fll: "FLL",
+    projects: "Проекты",
+    achievements: "Достижения",
+    partners: "Партнёры",
+    contact: "Контакты",
+  },
 } satisfies Record<Locale, Record<string, string>>;
 
 export function localPath(locale: Locale, slug = "") {
   const clean = slug.replace(/^\//, "");
   if (locale === "en") return clean ? `/en/${clean}` : "/en";
+  if (locale === "ro") return clean ? `/ro/${clean}` : "/ro";
   return clean ? `/${clean}` : "/";
 }
 
 export function alternatePath(locale: Locale, slug = "") {
-  return localPath(locale === "ro" ? "en" : "ro", slug);
+  return localPath(locale === "ru" ? "ro" : locale === "ro" ? "en" : "ru", slug);
 }
 
 export function pick(locale: Locale, ro: string, en: string) {
-  return locale === "ro" ? ro : en;
+  return locale === "ru" ? translateText(en) : locale === "ro" ? ro : en;
 }

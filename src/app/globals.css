@@ -65,12 +65,6 @@ img, video { max-width: 100%; }
 .button-secondary { border-color: #505050; background: rgba(8,8,8,.55); color: var(--white); }
 .button-secondary:hover { border-color: var(--orange); }
 
-.hero-brand { position: relative; isolation: isolate; height: min(66vh, 670px); min-height: 410px; padding: clamp(26px, 3vw, 54px); display: grid; place-items: center; background: radial-gradient(circle at 45% 38%, rgba(255,106,0,.09), transparent 58%), linear-gradient(145deg, #121212, #080808 70%); border: 1px solid #333; overflow: hidden; }
-.hero-brand::before { content: ""; position: absolute; inset: 16px; border: 1px solid rgba(255,255,255,.09); pointer-events: none; }
-.hero-brand::after { content: ""; position: absolute; top: 16px; left: 16px; width: 60px; height: 3px; background: var(--orange); }
-.hero-brand-logo { width: 100%; height: auto; max-width: 650px; filter: drop-shadow(0 12px 34px rgba(0,0,0,.35)); }
-.hero-brand-corner { position: absolute; right: 16px; bottom: 16px; display: flex; gap: 12px; align-items: center; padding: 11px 14px; color: #080808; background: var(--orange); font: 800 12px/1 var(--font-geist-mono), monospace; }
-.hero-brand-corner strong { font-size: 18px; }
 .stats-row { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding-inline: var(--pad); }
 .stats-row > div { min-width: 0; min-height: 128px; padding: 26px clamp(15px, 2.4vw, 34px); border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; }
 .stats-row > div:first-child { border-left: 1px solid var(--border); }
@@ -349,7 +343,7 @@ img, video { max-width: 100%; }
   .process-grid li:nth-child(-n+2), .application-grid article:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1230px) {
   :root { --header: 68px; }
   .menu-button { display: block; }
   .main-nav { position: fixed; inset: var(--header) 0 auto; height: calc(100svh - var(--header)); display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 24px var(--pad) 50px; background: rgba(8,8,8,.98); visibility: hidden; opacity: 0; pointer-events: none; transition: opacity .2s ease, visibility .2s ease; overflow-y: auto; }
@@ -358,7 +352,6 @@ img, video { max-width: 100%; }
   .main-nav a::after { display: none; }
   .hero-layout { grid-template-columns: 1fr; padding-top: 76px; }
   .hero-copy { max-width: 760px; }
-  .hero-brand { height: 500px; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .stats-row > div:nth-child(2) { border-right: 1px solid var(--border); }
   .stats-row > div:nth-child(3), .stats-row > div:nth-child(4) { border-top: 1px solid var(--border); }
@@ -395,7 +388,6 @@ img, video { max-width: 100%; }
   .hero-layout { gap: 42px; padding-block: 56px; }
   .hero-copy h1 { font-size: clamp(51px, 17vw, 76px); }
   .hero-copy > p { font-size: 17px; }
-  .hero-brand { height: 370px; min-height: 0; }
   .stats-row { padding-inline: var(--pad); }
   .stats-row > div { min-height: 110px; padding: 20px 14px; }
   .stats-row strong { font-size: 28px; }
@@ -477,3 +469,11 @@ img, video { max-width: 100%; }
 .fll-documentation-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 .fll-documentation-links .button { min-width: 128px; }
 @media (max-width: 480px) { .fll-documentation { padding: 20px; } .fll-documentation-links .button { flex: 1 1 100%; } }
+
+/* Three accessible locale links in the site header. */
+.language-options { display: flex; flex-shrink: 0; gap: 4px; align-items: center; }
+.language-options .language-link { min-width: 36px; min-height: 38px; padding: 0 7px; }
+.language-options .language-link.is-current { color: var(--orange-light); border-color: var(--orange); }
+.hero-copy h1.ru-hero-title { font-size: clamp(40px, 4.5vw, 74px); letter-spacing: -.06em; line-height: 1.08; }
+@media (max-width: 700px) { .language-options { gap: 3px; } .language-options .language-link { min-width: 32px; min-height: 34px; padding: 0 4px; font-size: 10px; } .hero-copy h1.ru-hero-title { font-size: clamp(30px, 7.8vw, 52px); } }
+@media (max-width: 380px) { .brand-wordmark { width: 72px; height: 40px; } .header-inner { gap: 7px; } .header-actions { gap: 6px; } }

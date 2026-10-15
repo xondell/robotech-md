@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { gallery } from "@/data/content";
+import { gallery, localize, pick } from "@/data/content";
 import type { GalleryCategory, Locale } from "@/data/types";
 import { assetUrl } from "@/lib/assets";
 
@@ -10,7 +10,15 @@ type Filter = "all" | GalleryCategory;
 
 export function GalleryGrid({ locale }: { locale: Locale }) {
   const [filter, setFilter] = useState<Filter>("all");
-  const labels: Record<Filter, string> = locale === "ro" ? {
+  const labels: Record<Filter, string> = locale === "ru" ? {
+    all: "Все",
+    competition: "Соревнования",
+    robot: "Робот",
+    workshop: "Мастерская",
+    projects: "Проекты",
+    awards: "Награды",
+    team: "Команда",
+  } : locale === "ro" ? {
     all: "Toate",
     competition: "Competiție",
     robot: "Robot",
@@ -31,7 +39,7 @@ export function GalleryGrid({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <div className="filter-bar" role="group" aria-label={locale === "ro" ? "Filtrează galeria" : "Filter gallery"}>
+      <div className="filter-bar" role="group" aria-label={pick(locale, "Filtrează galeria", "Filter gallery")}>
         {(Object.keys(labels) as Filter[]).map((key) => (
           <button key={key} type="button" className={filter === key ? "is-active" : ""} aria-pressed={filter === key} onClick={() => setFilter(key)}>
             {labels[key]}
@@ -42,15 +50,15 @@ export function GalleryGrid({ locale }: { locale: Locale }) {
         <div className="gallery-grid" aria-live="polite">
           {filtered.map((item) => (
             <figure key={item.id} className={`gallery-item gallery-${item.category}`}>
-              <Image src={assetUrl(item.src)} alt={item.alt[locale]} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
-              <figcaption>{item.alt[locale]}</figcaption>
+              <Image src={assetUrl(item.src)} alt={localize(item.alt, locale)} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw" />
+              <figcaption>{localize(item.alt, locale)}</figcaption>
             </figure>
           ))}
         </div>
       ) : (
         <div className="empty-state">
-          <strong>{locale === "ro" ? "Arhiva locală nu conține încă fotografii verificate pentru această categorie." : "The local archive does not yet contain verified photos for this category."}</strong>
-          <p>{locale === "ro" ? "Categoria este pregătită pentru încărcări viitoare din Supabase Storage." : "The category is ready for future uploads from Supabase Storage."}</p>
+          <strong>{pick(locale, "Arhiva locală nu conține încă fotografii verificate pentru această categorie.", "The local archive does not yet contain verified photos for this category.")}</strong>
+          <p>{pick(locale, "Categoria este pregătită pentru încărcări viitoare din Supabase Storage.", "The category is ready for future uploads from Supabase Storage.")}</p>
         </div>
       )}
     </>

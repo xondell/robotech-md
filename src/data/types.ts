@@ -1,4 +1,5 @@
-export type Locale = "ro" | "en";
+export type Locale = "ru" | "ro" | "en";
+export type LocalizedText = { ro: string; en: string; ru?: string };
 export type Program = "FTC" | "FLL";
 export type GalleryCategory =
   | "competition"
@@ -11,12 +12,12 @@ export type GalleryCategory =
 export interface TeamMember {
   id: string;
   name: string;
-  role: Record<Locale, string>;
+  role: LocalizedText;
   programs: Program[];
   photo: string;
   alumni: boolean;
   mentor: boolean;
-  bio?: Record<Locale, string>;
+  bio?: LocalizedText;
 }
 
 export interface Award {
@@ -24,9 +25,9 @@ export interface Award {
   year: string;
   season?: string;
   program: "FTC" | "FLL" | "Other";
-  competition: Record<Locale, string>;
-  award: Record<Locale, string>;
-  stage?: Record<Locale, string>;
+  competition: LocalizedText;
+  award: LocalizedText;
+  stage?: LocalizedText;
   officialUrl?: string;
   photo?: string;
 }
@@ -37,13 +38,13 @@ export interface Partner {
   logo: string;
   url: string;
   tier: string;
-  description: Record<Locale, string>;
+  description: LocalizedText;
 }
 
 export interface GalleryItem {
   id: string;
   src: string;
-  alt: Record<Locale, string>;
+  alt: LocalizedText;
   category: GalleryCategory;
   width: number;
   height: number;

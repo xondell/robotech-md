@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { localize, pick } from "@/data/content";
 import type { Locale, TeamMember } from "@/data/types";
 import { assetUrl } from "@/lib/assets";
 
@@ -10,10 +11,10 @@ type Filter = "all" | "FTC" | "FLL" | "mentors" | "alumni";
 export function TeamGrid({ locale, members }: { locale: Locale; members: TeamMember[] }) {
   const [filter, setFilter] = useState<Filter>("all");
   const labels: Record<Filter, string> = {
-    all: locale === "ro" ? "Toți" : "All",
+    all: locale === "ru" ? "Все" : locale === "ro" ? "Toți" : "All",
     FTC: "FTC",
     FLL: "FLL",
-    mentors: locale === "ro" ? "Mentori" : "Mentors",
+    mentors: locale === "ru" ? "Наставники" : locale === "ro" ? "Mentori" : "Mentors",
     alumni: "Alumni",
   };
   const filtered = members.filter((member) => {
@@ -25,7 +26,7 @@ export function TeamGrid({ locale, members }: { locale: Locale; members: TeamMem
 
   return (
     <>
-      <div className="filter-bar" role="group" aria-label={locale === "ro" ? "Filtrează membrii" : "Filter team members"}>
+      <div className="filter-bar" role="group" aria-label={pick(locale, "Filtrează membrii", "Filter team members")}>
         {(Object.keys(labels) as Filter[]).map((key) => (
           <button key={key} type="button" className={filter === key ? "is-active" : ""} aria-pressed={filter === key} onClick={() => setFilter(key)}>
             {labels[key]}
@@ -36,15 +37,15 @@ export function TeamGrid({ locale, members }: { locale: Locale; members: TeamMem
         {filtered.map((member) => (
           <article className="member-card" key={member.id}>
             <div className="member-photo">
-              <Image src={assetUrl(member.photo)} alt={`${member.name} — ${member.role[locale]}`} fill sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 25vw" />
+              <Image src={assetUrl(member.photo)} alt={`${member.name} — ${localize(member.role, locale)}`} fill sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 25vw" />
             </div>
             <div className="member-copy">
               <div className="program-badges">
                 {member.programs.map((program) => <span key={program}>{program}</span>)}
               </div>
               <h2>{member.name}</h2>
-              <p>{member.role[locale]}</p>
-              {member.bio && <p className="member-bio">{member.bio[locale]}</p>}
+              <p>{localize(member.role, locale)}</p>
+              {member.bio && <p className="member-bio">{localize(member.bio, locale)}</p>}
             </div>
           </article>
         ))}
