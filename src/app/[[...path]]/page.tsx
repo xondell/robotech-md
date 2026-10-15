@@ -95,7 +95,7 @@ export default async function Page({ params }: PageProps) {
     url: "https://robotech.md",
     address: { "@type": "PostalAddress", addressLocality: "Chișinău", addressCountry: "MD" },
     contactPoint: { "@type": "ContactPoint", name: "Boris Colesov", telephone: "+37368689606", contactType: "partnerships" },
-    sameAs: ["https://ftc-events.firstinspires.org/team/25491", "https://ftcscout.org/teams/25491"],
+    sameAs: ["https://ftc-events.firstinspires.org/team/25491", "https://ftcscout.org/teams/25491", "https://instagram.com/robotech.md"],
   };
   return <>{locale === "en" ? <script dangerouslySetInnerHTML={{ __html: "document.documentElement.lang='en'" }} /> : null}<a className="skip-link" href="#main">{locale === "ro" ? "Sari la conținut" : "Skip to content"}</a><Header locale={locale} slug={slug} /><main id="main">{page}</main><Footer locale={locale} /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} /></>;
 }

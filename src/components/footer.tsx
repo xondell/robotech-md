@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { localPath, nav } from "@/data/content";
 import type { Locale } from "@/data/types";
@@ -7,7 +8,7 @@ export function Footer({ locale }: { locale: Locale }) {
     <footer className="site-footer">
       <div className="footer-grid shell">
         <div>
-          <div className="wordmark footer-wordmark"><span className="wordmark-mark">R</span><span>ROBO<span>TECH</span></span></div>
+          <Image className="footer-logo" src="/brand/robotech-logo.svg" alt="ROBOTECH" width={260} height={142} />
           <p>{locale === "ro" ? "Inginerie. Competiție. Impact." : "Engineering. Competition. Impact."}</p>
           <p className="muted">Chișinău, Moldova · FTC #25491</p>
         </div>
@@ -25,6 +26,7 @@ export function Footer({ locale }: { locale: Locale }) {
         <div className="footer-links">
           <strong>Contact</strong>
           <a href="tel:+37368689606">+373 68 689 606</a>
+          <a href="https://instagram.com/robotech.md" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
           <Link href={localPath(locale, "partners")}>{locale === "ro" ? "Devino partener" : "Become a partner"}</Link>
         </div>
       </div>

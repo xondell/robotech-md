@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { alternatePath, localPath, nav, type RouteSlug } from "@/data/content";
@@ -10,7 +11,6 @@ const navItems: Array<{ key: keyof (typeof nav)["ro"]; slug: RouteSlug }> = [
   { key: "team", slug: "team" },
   { key: "ftc", slug: "ftc" },
   { key: "fll", slug: "fll" },
-  { key: "projects", slug: "projects" },
   { key: "achievements", slug: "achievements" },
   { key: "partners", slug: "partners" },
   { key: "contact", slug: "contact" },
@@ -35,8 +35,7 @@ export function Header({ locale, slug }: { locale: Locale; slug: RouteSlug }) {
     <header className="site-header">
       <div className="header-inner">
         <Link className="wordmark" href={localPath(locale)} aria-label="ROBOTECH — home">
-          <span className="wordmark-mark" aria-hidden="true">R</span>
-          <span>ROBO<span>TECH</span></span>
+          <Image className="brand-wordmark" src="/brand/robotech-logo.svg" width={126} height={69} alt="" aria-hidden="true" />
         </Link>
 
         <nav id="mobile-navigation" className={`main-nav ${open ? "is-open" : ""}`} aria-label={locale === "ro" ? "Navigare principală" : "Primary navigation"}>
@@ -50,6 +49,9 @@ export function Header({ locale, slug }: { locale: Locale; slug: RouteSlug }) {
               {nav[locale][item.key]}
             </Link>
           ))}
+          <a href="https://instagram.com/robotech.md" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
+            Instagram <span aria-hidden="true">↗</span>
+          </a>
           <a href="https://ftcscout.org/teams/25491" target="_blank" rel="noreferrer" onClick={() => setOpen(false)}>
             FTC Scout <span aria-hidden="true">↗</span>
           </a>

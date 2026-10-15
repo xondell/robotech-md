@@ -39,6 +39,39 @@ function SeasonBackLink({ locale }: { locale: Locale }) {
   return <Link className="season-back-link" href={localPath(locale, "fll")}><span aria-hidden="true">←</span> {pick(locale, "Toate sezoanele FLL", "All FLL seasons")}</Link>;
 }
 
+
+const documentationLanguages = [
+  { code: "ro", label: "Română" },
+  { code: "ru", label: "Русский" },
+  { code: "en", label: "English" },
+] as const;
+
+function FllDocumentationLinks({ locale }: { locale: Locale }) {
+  return (
+    <div className="fll-documentation" id="documentation">
+      <div className="fll-documentation-heading">
+        <span className="eyebrow">MUOVIS · FLL 2025–2026</span>
+        <h3>{pick(locale, "Documentație în trei limbi", "Documentation in three languages")}</h3>
+      </div>
+      <div className="fll-documentation-links">
+        {documentationLanguages.map(({ code, label }) => (
+          <a
+            key={code}
+            className="button button-secondary"
+            href={`/documents/muovis-documentation-${code}.pdf`}
+            target="_blank"
+            rel="noopener noreferrer"
+            hrefLang={code}
+            aria-label={`${pick(locale, "Documentație PDF", "PDF documentation")} — ${label}`}
+          >
+            {label} <Arrow />
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function FllSeasonSelectPage({ locale }: { locale: Locale }) {
   return (
     <>
@@ -67,6 +100,7 @@ export function FllSeasonSelectPage({ locale }: { locale: Locale }) {
             <span className="season-open">{pick(locale, "Deschide arhiva", "Open archive")} <Arrow /></span>
           </Link>
         </div>
+        <div className="fll-documents-index"><FllDocumentationLinks locale={locale} /></div>
       </section>
     </>
   );
@@ -160,7 +194,7 @@ export function FllArchivePage({ locale, achievementData = awards }: { locale: L
       </FllHero>
 
       <nav className="archive-nav" aria-label={pick(locale, "Cuprinsul sezonului", "Season contents")}>
-        <div className="shell"><a href="#muovis">MuoVis</a><a href="#how-it-works">{pick(locale, "Cum funcționează", "How it works")}</a><a href="#solution">{pick(locale, "Soluție", "Solution")}</a><a href="#experts">{pick(locale, "Experți", "Experts")}</a><a href="#robot">Robot</a><a href="#results">{pick(locale, "Rezultate", "Results")}</a></div>
+        <div className="shell"><a href="#muovis">MuoVis</a><a href="#how-it-works">{pick(locale, "Cum funcționează", "How it works")}</a><a href="#solution">{pick(locale, "Soluție", "Solution")}</a><a href="#experts">{pick(locale, "Experți", "Experts")}</a><a href="#robot">Robot</a><a href="#documentation">{pick(locale, "Documentație", "Documentation")}</a><a href="#results">{pick(locale, "Rezultate", "Results")}</a></div>
       </nav>
 
       <section className="section shell" id="muovis">
@@ -201,7 +235,8 @@ export function FllArchivePage({ locale, achievementData = awards }: { locale: L
               <ul className="feature-list"><li>{pick(locale, "Detector compact de muoni", "Compact muon detector")}</li><li>{pick(locale, "Arhitectură modulară a sistemului", "Modular system architecture")}</li><li>{pick(locale, "Analiza și interpretarea datelor", "Data analysis and interpretation")}</li><li>{pick(locale, "Concept de integrare pe o platformă mobilă sau dronă", "Concept for integration on a mobile platform or drone")}</li></ul>
               <h3>{pick(locale, "Direcții de inovație", "Innovation directions")}</h3>
               <div className="season-tags"><span>{pick(locale, "PARTICULE COSMICE", "COSMIC PARTICLES")}</span><span>{pick(locale, "NEDISTRUCTIV", "NON-DESTRUCTIVE")}</span><span>{pick(locale, "MOBILITATE", "MOBILITY")}</span><span>{pick(locale, "RECONSTRUCȚIE DATE", "DATA RECONSTRUCTION")}</span></div>
-              <div className="button-row"><a className="button button-primary" href={assetUrl(`/documents/muovis-documentation-${locale}.pdf`)} target="_blank" rel="noreferrer">{pick(locale, "Documentație PDF", "PDF documentation")} <Arrow /></a><a className="button button-secondary" href={assetUrl("/models/muovis-concept.glb")} download>{pick(locale, "Model 3D", "3D model")} ↓</a></div>
+              <div className="button-row"><a className="button button-secondary" href={assetUrl("/models/muovis-concept.glb")} download>{pick(locale, "Model 3D", "3D model")} ↓</a></div>
+              <FllDocumentationLinks locale={locale} />
             </div>
           </div>
           <div className="concept-demo" aria-label={pick(locale, "Vizualizare conceptuală din prezentarea proiectului", "Concept visualization from the project presentation")}><div><span className="eyebrow">CONCEPT SIMULATION · 2025–2026</span><h3>{pick(locale, "De la traiectorii la o anomalie de densitate.", "From particle trajectories to a density anomaly.")}</h3><p>{pick(locale, "Prezentarea originală ilustra fluxul dorit: înregistrarea traiectoriilor, analiza densității și evidențierea unei zone neobișnuite. Aceasta este o simulare explicativă, nu rezultatul unui test fizic.", "The original presentation illustrated the intended flow: recording trajectories, analyzing density, and highlighting an unusual area. This is an explanatory simulation, not the result of a physical test.")}</p></div><div className="scan-readout"><span>&gt; MUON TRAJECTORIES</span><span>&gt; DENSITY RECONSTRUCTION</span><strong>&gt; ANOMALY VISUALIZATION</strong></div></div>

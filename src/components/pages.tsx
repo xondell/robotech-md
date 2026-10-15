@@ -88,11 +88,9 @@ export function HomePage({ locale, members = team, achievementData = awards }: {
               <Link className="button button-secondary" href={localPath(locale, "partners")}>{pick(locale, "Devino partener", "Partner with ROBOTECH")}</Link>
             </div>
           </div>
-          <div className="hero-mosaic" aria-label={pick(locale, "Portrete reale ale membrilor ROBOTECH", "Real portraits of ROBOTECH members")}>
-            {members.slice(0, 6).map((member, index) => (
-              <div key={member.id} className={`mosaic-tile mosaic-${index + 1}`}><Image src={assetUrl(member.photo)} alt={member.name} fill priority={index < 2} sizes="(max-width: 800px) 33vw, 18vw" /></div>
-            ))}
-            <div className="mosaic-label"><span>FTC</span><strong>#25491</strong></div>
+          <div className="hero-brand" aria-label={pick(locale, "Emblema ROBOTECH", "ROBOTECH emblem")}>
+            <Image className="hero-brand-logo" src="/brand/robotech-logo.svg" alt={pick(locale, "Sigla ROBOTECH cu șopârlă robotică", "ROBOTECH robotic lizard logo")} width={1151} height={630} priority />
+            <div className="hero-brand-corner"><span>FTC</span><strong>#25491</strong></div>
           </div>
         </div>
         <div className="stats-row shell">
