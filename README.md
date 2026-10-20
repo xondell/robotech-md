@@ -19,3 +19,29 @@ The site has a verified local-data fallback, so production builds do not require
 - Import the GitHub repository into Vercel, then attach `robotech.md` after the preview deployment is approved.
 
 See `docs/AUDIT.md` for the source-backup audit and migration decisions.
+
+## Website content
+
+The interface supports Romanian, Russian and English, with team, FTC/FLL programs, achievements, partners and contact sections. Navigation and shared layouts are responsive.
+
+## Source guide
+
+| Area | Location |
+|---|---|
+| Page routing | [src/app/[[...path]]/page.tsx](src/app/%5B%5B...path%5D%5D/page.tsx) |
+| Page components | [src/components](src/components) |
+| Local content and translations | [src/data](src/data) |
+| Database-backed content loading | [src/lib/content.ts](src/lib/content.ts) |
+| Media resolution | [src/lib/assets.ts](src/lib/assets.ts) |
+| Database schema and seed | [supabase/migrations](supabase/migrations) · [supabase/seed.sql](supabase/seed.sql) |
+| Migration audit | [docs/AUDIT.md](docs/AUDIT.md) |
+
+## Commands
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
+
+`npm run check` runs these three commands in order. After a successful build, `npm start` serves the production application locally. The media upload command is a separate setup operation and requires its server credential.
